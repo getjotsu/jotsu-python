@@ -4,8 +4,8 @@ version = "0.1.0"
 description = "The CLI for https://api.jotsu.com"
 license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = ["click"]
+requires-python = ">=3.10"
+dependencies = ["click", "httpx", "python-dotenv"]
 
 [project.scripts]
 jotsu = "jotsu.cli.main:cli"

@@ -1,0 +1,7 @@
+[flake8]
+max-line-length = 119
+exclude =
+    versions,
+per-file-ignores =
+    jotsu/cli/__init__.py: E402
+    tests/*: D101
