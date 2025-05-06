@@ -27,6 +27,5 @@ jotsu whoami
 ## Contributing
 
 ```shell
-brew install openapi-generator   # or npm install @openapitools/openapi-generator-cli -g
 pip install -e .
 ```
