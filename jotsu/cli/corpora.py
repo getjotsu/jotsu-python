@@ -6,6 +6,7 @@ import click
 
 from jotsu.cli import cli
 from jotsu.client import Jotsu
+from .utils import echo_usage
 
 
 @cli.group('corpora')
@@ -73,3 +74,27 @@ def corpora_delete(corpus_id: str, json_: bool, force: bool):
             click.echo(json.dumps(corpus))
         else:
             click.echo(f"Corpus {corpus['id']} deleted successfully.")
+
+
+@corpora.command('query')
+@click.argument('question')
+@click.option('--corpus-id', required=True)
+@click.option('--json', 'json_', is_flag=True)
+@click.option('--verbose', '-v', is_flag=True)
+def corpora_query(corpus_id: str, question: str, json_: bool, verbose: bool):
+    with Jotsu() as client:
+        res = client.post(
+            f'/services/rag/corpora/{corpus_id}/query',
+            json={'query': question}
+        )
+        res.raise_for_status()
+
+        data = res.json()
+        if json_:
+            click.echo(json.dumps(data))
+        else:
+            click.echo(json.dumps(data['answer']))
+            if verbose:
+                click.echo()
+                echo_usage(data['usage'])
+                click.echo()

@@ -8,4 +8,4 @@ from . import corpora
 from . import documents
 from . import whoami
 
-__all__ = (cli, corpora, whoami)
+__all__ = (cli, corpora, documents, whoami)
