@@ -7,5 +7,6 @@ from .main import cli
 from . import corpora
 from . import documents
 from . import whoami
+from . import workflows
 
-__all__ = (cli, corpora, documents, whoami)
+__all__ = (cli, corpora, documents, whoami, workflows)
