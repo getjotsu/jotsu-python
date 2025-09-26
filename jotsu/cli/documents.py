@@ -21,7 +21,7 @@ def documents():
 @click.option('--json', 'json_', is_flag=True)
 def documents_list(corpus_id: str, json_: bool):
     with Jotsu() as client:
-        res = client.get(f'/services/rag/corpora/{corpus_id}/documents?order_by=name')
+        res = client.get(f'/corpora/{corpus_id}/documents?order_by=name')
         res.raise_for_status()
         data = res.json()
 
@@ -39,7 +39,7 @@ def documents_list(corpus_id: str, json_: bool):
 
 def _document_create(corpus_id: str, json_data: dict, *, verbose: bool, json_: bool):
     with Jotsu() as client:
-        res = client.post(f'/services/rag/corpora/{corpus_id}/documents', json=json_data)
+        res = client.post(f'/corpora/{corpus_id}/documents', json=json_data)
         res.raise_for_status()
 
         doc = res.json()
@@ -94,7 +94,7 @@ def documents_delete(document_id: str, json_: bool, force: bool):
             return
 
     with Jotsu() as client:
-        res = client.delete(f'/services/rag/documents/{document_id}')
+        res = client.delete(f'/documents/{document_id}')
         res.raise_for_status()
 
         doc = res.json()
@@ -122,10 +122,9 @@ def docs_csv(path: str, corpus_id: str, name_column: str, text_column: str, deli
                     'text': row[text_column]
                 }
 
-                res = client.post(f'/services/rag/corpora/{corpus_id}/documents', json=json_data)
+                res = client.post(f'/corpora/{corpus_id}/documents', json=json_data)
                 res.raise_for_status()
                 results.append(res.json())
-
 
     if json_:
         for doc in results:

@@ -18,4 +18,6 @@ def whoami(json_: bool):
         if json_:
             click.echo(json.dumps(data, indent=4))
         else:
-            click.echo(data['email'])
+            for key, value in data.items():
+                if value is not None:
+                    click.echo(f'{key.upper()}: {value}')

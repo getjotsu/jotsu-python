@@ -14,8 +14,6 @@ class Jotsu(httpx.Client):
 
     def _parse_url(self, url: str) -> str:
         if url.startswith('/'):
-            if not url.startswith(f'/{self.account_id}'):
-                url = f'/{self.account_id}{url}'
             return f'{self.base_url}{url}'
         return url
 

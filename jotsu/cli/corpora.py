@@ -19,7 +19,7 @@ def corpora():
 @click.option('--json', 'json_', is_flag=True)
 def corpora_list(json_: bool):
     with Jotsu() as client:
-        res = client.get('/services/rag/corpora?order_by=name')
+        res = client.get('/corpora?order_by=name')
         res.raise_for_status()
         data = res.json()
 
@@ -46,7 +46,7 @@ def corpora_create(**kwargs):
     json_ = kwargs.pop('json_', False)
 
     with Jotsu() as client:
-        res = client.post('/services/rag/corpora', json=kwargs)
+        res = client.post('/corpora', json=kwargs)
         res.raise_for_status()
 
         corpus = res.json()
@@ -66,7 +66,7 @@ def corpora_delete(corpus_id: str, json_: bool, force: bool):
             return
 
     with Jotsu() as client:
-        res = client.delete(f'/services/rag/corpora/{corpus_id}')
+        res = client.delete(f'/corpora/{corpus_id}')
         res.raise_for_status()
 
         corpus = res.json()
@@ -84,7 +84,7 @@ def corpora_delete(corpus_id: str, json_: bool, force: bool):
 def corpora_query(corpus_id: str, question: str, json_: bool, verbose: bool):
     with Jotsu() as client:
         res = client.post(
-            f'/services/rag/corpora/{corpus_id}/query',
+            f'/corpora/{corpus_id}/query',
             json={'query': question}
         )
         res.raise_for_status()
