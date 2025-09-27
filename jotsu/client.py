@@ -1,8 +1,6 @@
 import os
-from wsgiref.headers import Headers
 
 import httpx
-from httpx import URL, Response
 
 
 class Jotsu(httpx.Client):
@@ -12,7 +10,7 @@ class Jotsu(httpx.Client):
         self.api_key = api_key if api_key else os.environ['JOTSU_API_KEY']
 
         headers = httpx.Headers(kwargs.pop('headers', {}))
-        if not 'Authorization' in headers:
+        if 'Authorization' not in headers:
             headers['Authorization'] = f'Bearer {self.api_key}'
 
         super().__init__(base_url=base_url, headers=headers, **kwargs)

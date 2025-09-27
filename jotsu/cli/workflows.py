@@ -7,6 +7,7 @@ import click
 from jotsu.cli import cli
 from jotsu.client import Jotsu
 
+
 @cli.group('workflows')
 def workflows():
     """ Automations """
@@ -18,7 +19,7 @@ def workflows():
 def workflows_list(ctx):
 
     with Jotsu() as client:
-        res = client.get(f'/workflows?order_by=name')
+        res = client.get('/workflows?order_by=name')
         res.raise_for_status()
         data = res.json()
 
@@ -40,10 +41,9 @@ def workflows_list(ctx):
 @workflows.command('run')
 @click.argument('workflow_id')
 def workflow_run(workflow_id: str):
-
     with Jotsu() as client:
         with client.stream('POST', f'/workflows/{workflow_id}/run', json={'data': None}, timeout=60) as res:
             res.raise_for_status()
-            for b in res.iter_bytes(chunk_size=1):
-                print(b.decode("utf-8"), end="")
-
+            for line in res.iter_lines():
+                if line:
+                    print(line)

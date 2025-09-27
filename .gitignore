@@ -6,3 +6,6 @@ __pycache__
 /.env
 /.env.*
 /openapi.json
+
+# data
+*.csv
